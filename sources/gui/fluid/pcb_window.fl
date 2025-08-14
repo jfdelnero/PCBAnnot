@@ -1,0 +1,171 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0402
+header_name {.h}
+code_name {.cxx}
+class pcb_window {open
+} {
+  Function {pcb_window()} {open
+  } {
+    Fl_Window window {
+      label {PCB Annot} open
+      xywh {312 206 1277 540} type Single hide resizable
+    } {
+      Fl_Group {} {
+        label {netlist / pinlist} open
+        xywh {1000 387 275 113} box ENGRAVED_FRAME labeltype EMBOSSED_LABEL labelsize 12 align 21
+      } {
+        Fl_Choice sel_part {
+          label part
+          user_data this
+          callback pcb_infos_window_callback open
+          xywh {1085 408 180 22} down_box BORDER_BOX
+        } {}
+        Fl_Choice sel_net {
+          label net
+          user_data this
+          callback pcb_infos_window_callback open
+          xywh {1085 443 180 22} down_box BORDER_BOX
+        } {}
+        Fl_Button zp {
+          label {+}
+          callback bt_zp_callback
+          xywh {1010 473 26 20}
+        }
+        Fl_Button zm {
+          label {-}
+          callback bt_zm_callback
+          xywh {1036 473 28 20}
+        }
+      }
+      Fl_Group {} {
+        label Status open
+        xywh {1000 2 270 168} box ENGRAVED_FRAME labeltype ENGRAVED_LABEL labelsize 12 align 21
+      } {
+        Fl_Output x_pos {
+          xywh {1005 17 265 15} labelsize 10 textsize 10
+        }
+        Fl_Output y_pos {
+          xywh {1005 33 265 15} labelsize 10 textsize 10
+        }
+        Fl_Output global_status {
+          xywh {1005 49 265 16} labelsize 10 textsize 10
+        }
+        Fl_Text_Display object_txt {
+          user_data this
+          xywh {1005 68 260 96} labelsize 10 textsize 10
+        }
+      }
+      Fl_Group pcb_disp {
+        label {Edit Area} open
+        xywh {0 1 995 539} box ENGRAVED_FRAME labeltype EMBOSSED_LABEL labelsize 12 align 21 resizable
+      } {}
+      Fl_Group {} {
+        label Project open
+        xywh {1005 505 265 35} box ENGRAVED_FRAME labeltype EMBOSSED_LABEL labelsize 12 align 21
+      } {
+        Fl_Button {} {
+          label Save
+          user_data this
+          callback pcb_save
+          xywh {1175 510 80 25}
+        }
+      }
+      Fl_Group {} {
+        label {Edit mode} open
+        xywh {1000 170 270 209} box ENGRAVED_FRAME labeltype EMBOSSED_LABEL labelsize 10 align 21
+      } {
+        Fl_Choice mode_sel {
+          label {edit mode:}
+          xywh {1092 189 155 28} down_box BORDER_BOX
+        } {
+          MenuItem {} {
+            label Net
+            xywh {0 0 100 20} type Radio
+          }
+          MenuItem {} {
+            label Part
+            xywh {0 0 100 20} type Radio
+          }
+        }
+        Fl_Button next_part {
+          label {Next Part}
+          callback bt_next_part_callback
+          xywh {1003 225 74 22}
+        }
+        Fl_Button next_net {
+          label {Next Net}
+          callback bt_next_net_callback
+          xywh {1003 251 74 22}
+        }
+        Fl_Button clear_pin {
+          label {Clear pin}
+          callback bt_clear_pin_callback
+          xywh {1077 225 71 22}
+        }
+        Fl_Button clear_net {
+          label {Clear net}
+          callback bt_clear_net_callback
+          xywh {1077 251 71 22}
+        }
+        Fl_Output curpin {
+          label cupin
+          xywh {1199 225 66 22}
+        }
+        Fl_Output curnet {
+          label curnet
+          xywh {1199 251 66 22}
+        }
+        Fl_Slider slide_l00 {
+          label L00
+          callback slide_changed
+          xywh {1003 306 22 48}
+        }
+        Fl_Slider slide_l01 {
+          label L01
+          callback slide_changed
+          xywh {1028 306 22 48}
+        }
+        Fl_Slider slide_l02 {
+          label L02
+          callback slide_changed
+          xywh {1053 306 22 48}
+        }
+        Fl_Slider slide_l03 {
+          label L03
+          callback slide_changed
+          xywh {1078 306 22 48}
+        }
+        Fl_Slider slide_l04 {
+          label L04
+          callback slide_changed
+          xywh {1103 306 22 48}
+        }
+        Fl_Slider slide_l05 {
+          label L05
+          callback slide_changed
+          xywh {1128 306 22 48}
+        }
+        Fl_Slider slide_l06 {
+          label L06
+          callback slide_changed
+          xywh {1153 306 22 48}
+        }
+        Fl_Slider slide_l07 {
+          label L07
+          callback slide_changed
+          xywh {1178 306 22 48}
+        }
+        Fl_Slider slide_pins {
+          label Pins
+          callback slide_changed
+          xywh {1207 306 22 48}
+        }
+        Fl_Slider slide_nets {
+          label Nets
+          callback slide_changed selected
+          xywh {1238 306 22 48}
+        }
+      }
+    }
+  }
+}
