@@ -1,6 +1,6 @@
-#define FILE_VERSION        0,2,0,1
-#define STR_FILE_VERSION   "0,2,0,1\0"
-#define STR_FILE_VERSION2  "0.2.0.1"
+#define FILE_VERSION        0,2,0,2
+#define STR_FILE_VERSION   "0,2,0,2\0"
+#define STR_FILE_VERSION2  "0.2.0.2"
 #define STR_DATE           "19 Aug 2025\0"
 #define NOMFENETRE    "PCB Annot v" STR_FILE_VERSION2
 

@@ -551,6 +551,10 @@ void tick_infos(void *w) {
 		{
 			if(guicontext->update_graph)
 			{
+				char tmpstr[512];
+				sprintf(tmpstr,"x:%d y:%d",actx.point_offset_x,actx.point_offset_y);
+				window->x_pos->value(tmpstr);
+
 				update_graph();
 				fl_draw_image((unsigned char *)guicontext->flayoutframebuffer, window->pcb_disp->x(), window->pcb_disp->y(), guicontext->pic_x, guicontext->pic_y , 4, 0);
 				guicontext->update_graph = 0;
@@ -812,6 +816,7 @@ void mouse_di_cb(Fl_Widget *o, void *v)
 
 			actx.point_offset_x = guicontext->pic_offset_x + Fl::event_x();
 			actx.point_offset_y = guicontext->pic_offset_y + Fl::event_y();
+
 			guicontext->update_graph = 1;
 
 			if(dragged)
