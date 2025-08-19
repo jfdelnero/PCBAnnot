@@ -412,66 +412,69 @@ void update_graph()
 
 	while( bdata[layer].ysize )
 	{
-		dst = (uint32_t*)&guicontext->flayoutframebuffer[(0*guicontext->pic_x)*PIX_SIZE];
-
-		for(j=0;(j+guicontext->pic_offset_y)<0;j++)
+		if ( guicontext->alpha[layer] )
 		{
-			for(i=0;i<(guicontext->pic_x);i++)
+			dst = (uint32_t*)&guicontext->flayoutframebuffer[(0*guicontext->pic_x)*PIX_SIZE];
+
+			for(j=0;(j+guicontext->pic_offset_y)<0;j++)
 			{
-				dst++;
-			}
-		}
-
-		if(guicontext->pic_offset_y>=0)
-		{
-			picy = guicontext->pic_offset_y;
-		}
-		else
-		{
-			picy = 0;
-		}
-
-		for(; (j<guicontext->pic_y) && (picy<bdata[layer].ysize) ; j++,picy++)
-		{
-			dst = (uint32_t*)&guicontext->flayoutframebuffer[(j*guicontext->pic_x)*PIX_SIZE];
-
-			for(i=0;(i+guicontext->pic_offset_x)<0;i++)
-			{
-				*dst++ = 0x20202020;
-			}
-
-			if(guicontext->pic_offset_x>=0)
-			{
-				picx = guicontext->pic_offset_x;
-			}
-			else
-			{
-				picx = 0;
-			}
-
-			src = (uint32_t*)(bdata[layer].data) + (((bdata[layer].xsize*picy)+picx));
-
-			if( (j+guicontext->pic_offset_y) >= 0 )
-			{
-				for(;i<guicontext->pic_x && picx<bdata[layer].xsize;i++,picx++)
+				for(i=0;i<(guicontext->pic_x);i++)
 				{
-					*dst = alpha( *dst, *src, guicontext->alpha[layer]);
 					dst++;
-					src++;
 				}
 			}
+
+			if(guicontext->pic_offset_y>=0)
+			{
+				picy = guicontext->pic_offset_y;
+			}
 			else
 			{
-			   for(;i<guicontext->pic_x && picx<bdata[layer].xsize;i++,picx++)
-			   {
-					dst++;
-					src++;
-			   }
+				picy = 0;
 			}
 
-			for(;i<guicontext->pic_x;i++)
+			for(; (j<guicontext->pic_y) && (picy<bdata[layer].ysize) ; j++,picy++)
 			{
-				dst++;
+				dst = (uint32_t*)&guicontext->flayoutframebuffer[(j*guicontext->pic_x)*PIX_SIZE];
+
+				for(i=0;(i+guicontext->pic_offset_x)<0;i++)
+				{
+					*dst++ = 0x20202020;
+				}
+
+				if(guicontext->pic_offset_x>=0)
+				{
+					picx = guicontext->pic_offset_x;
+				}
+				else
+				{
+					picx = 0;
+				}
+
+				src = (uint32_t*)(bdata[layer].data) + (((bdata[layer].xsize*picy)+picx));
+
+				if( (j+guicontext->pic_offset_y) >= 0 )
+				{
+					for(;i<guicontext->pic_x && picx<bdata[layer].xsize;i++,picx++)
+					{
+						*dst = alpha( *dst, *src, guicontext->alpha[layer]);
+						dst++;
+						src++;
+					}
+				}
+				else
+				{
+				   for(;i<guicontext->pic_x && picx<bdata[layer].xsize;i++,picx++)
+				   {
+						dst++;
+						src++;
+				   }
+				}
+
+				for(;i<guicontext->pic_x;i++)
+				{
+					dst++;
+				}
 			}
 		}
 
