@@ -81,6 +81,32 @@ typedef int (* CMD_FUNC)( script_ctx * ctx, char * line);
 
 annot_ctx actx;
 
+static int isinpin(pin * p, int x, int y)
+{
+	if(
+		( (p->x + 6) >= x && (p->x - 6) <= x ) &&
+		( (p->y + 6) >= y && (p->y - 6) <= y )
+	)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
+static int isinnode(node * n, int x, int y)
+{
+	if(
+		( (x + 6) >= n->x && (x - 6) <= n->x ) &&
+		( (y + 6) >= n->y && (y - 6) <= n->y )
+	)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
 int add_pin(int x, int y, int prt)
 {
 	part * p;
@@ -90,6 +116,14 @@ int add_pin(int x, int y, int prt)
 		p =  (part *)&actx.parts[prt];
 		if(p->pins_cnt < MAX_PIN_NUM)
 		{
+			for(int i=0;i<p->pins_cnt;i++)
+			{
+				if( isinpin( &p->pins_list[i], x, y ) )
+				{
+					return 0;
+				}
+			}
+
 			printf("part %d pin %d: %d %d\n",prt, p->pins_cnt+1,x,y);
 			p->pins_list[p->pins_cnt].x = x;
 			p->pins_list[p->pins_cnt].y = y;
@@ -225,32 +259,6 @@ int clear_net(int netid)
 	return 0;
 }
 
-int isinpin(pin * p, int x, int y)
-{
-	if(
-		( (p->x + 6) >= x && (p->x - 6) <= x ) &&
-		( (p->y + 6) >= y && (p->y - 6) <= y )
-	)
-	{
-		return 1;
-	}
-
-	return 0;
-}
-
-int isinnode(node * n, int x, int y)
-{
-	if(
-		( (x + 6) >= n->x && (x - 6) <= n->x ) &&
-		( (y + 6) >= n->y && (y - 6) <= n->y )
-	)
-	{
-		return 1;
-	}
-
-	return 0;
-}
-
 int find_net(int x, int y, node * nodeskip)
 {
 	int i2,j2;
@@ -326,8 +334,7 @@ int find_net(int x, int y, node * nodeskip)
 	return 0;
 }
 
-
-int update_sel(int x, int y)
+int clear_all_sel()
 {
 	int i,j;
 	part * p;
@@ -357,8 +364,16 @@ int update_sel(int x, int y)
 		}
 	}
 
-	// Find the pin under the pointer
+	return 0;
+}
 
+int update_sel(int x, int y)
+{
+	int i,j;
+	part * p;
+	pin * pi;
+
+	// Find the pin under the pointer
 	for(i=0;i<actx.parts_cnt+1;i++)
 	{
 		p =  (part *)&actx.parts[i];
@@ -367,6 +382,9 @@ int update_sel(int x, int y)
 			pi = &p->pins_list[j];
 			if( isinpin( pi, x, y ) )
 			{
+
+				clear_all_sel();
+
 				actx.connectionslist[0] = '\0';
 				actx.lastnetname[0] = '\0';
 				pi->s=1;
