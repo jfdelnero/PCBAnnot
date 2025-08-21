@@ -29,7 +29,7 @@
 extern "C" {
 #endif
 
-#define MAX_STR_LEN 32
+#define MAX_STR_LEN 64
 
 typedef struct pin_
 {
